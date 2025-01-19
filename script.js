@@ -74,6 +74,59 @@ function setpage(page){
 }
 
 
+function check_button(){
+
+    // Wait until the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", () => {
+        // Get elements
+        const openPopupBtn = document.getElementById('openPopupBtn');
+        const closePopupBtn = document.getElementById('closePopupBtn');
+        const popup = document.getElementById('popup');
+        const overlay = document.getElementById('popupOverlay');
+        const popupContent = document.getElementById('popupContent');
+
+        if (!openPopupBtn || !closePopupBtn || !popup || !overlay || !popupContent) {
+            console.error("One or more elements are missing in the DOM.");
+            return; // Exit if elements are not found
+        }
+
+        // Show popup and load content from an external file
+        openPopupBtn.addEventListener('click', () => {
+            fetch('projects/capstone.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load content.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    popupContent.innerHTML = data;
+                    popup.style.display = 'block';
+                    overlay.style.display = 'block';
+                })
+                .catch(error => {
+                    popupContent.innerHTML = '<p>Error loading content. Please try again later.</p>';
+                    popup.style.display = 'block';
+                    overlay.style.display = 'block';
+                });
+        });
+
+        // Close popup
+        closePopupBtn.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // Close popup when clicking on the overlay
+        overlay.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+
+}
+
+
 function main(){
     setpage('#home');
     let currentPage = window.location.hash; // Default to #home if no hash
@@ -85,5 +138,11 @@ function main(){
         }
         
     };
+
+    check_button();
 }
+
+
 main();
+
+
