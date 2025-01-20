@@ -37,11 +37,18 @@ function showProjectsPage() {
 }
 
 function showProjectsPagehtml() {
+    alert("this is the projects html");
     // Check if the current page is already #projects
     if (window.location.hash === "#projects") return;
 
     // Set the page hash to #projects
-    setpage('#projects');
+    window.location.hash='#projects';
+
+    // Optionally, show a loading spinner or indicator
+    const mainContainer = document.getElementById('main');
+    if (mainContainer) {
+        mainContainer.innerHTML = '<p>Loading...</p>';
+    }
 
     // Fetch the new HTML file
     fetch('projects_page.html')
@@ -53,7 +60,6 @@ function showProjectsPagehtml() {
         })
         .then(data => {
             // Replace the current page content with the fetched content
-            const mainContainer = document.getElementById('main'); // Assuming there's a container for the main content
             if (mainContainer) {
                 mainContainer.innerHTML = data;
             } else {
@@ -62,9 +68,12 @@ function showProjectsPagehtml() {
         })
         .catch(error => {
             console.error(error);
-            alert('Error loading the projects page. Please try again later.');
+            if (mainContainer) {
+                mainContainer.innerHTML = '<p>Error loading the projects page. Please try again later.</p>';
+            }
         });
 }
+
 
 
 
@@ -87,10 +96,14 @@ function listcurrentprojects(container) {
     // Create an unordered list element
     let ul = document.createElement('ul');
 
+    //set class name
+    ul.id = 'openPopupBtn';  
+
     // Loop through the projects array and create list items
     for (let project of projects) {
         let li = document.createElement('li'); // Create a list item
         li.textContent = project;             // Set the text of the list item
+        li.className = 'openPopupBtn-item';
         ul.appendChild(li);                   // Append the list item to the unordered list
     }
 
@@ -159,15 +172,6 @@ function check_button(){
 
 function main(){
     setpage('#home');
-    let currentPage = window.location.hash; // Default to #home if no hash
-
-    window.onload = function() {
-        
-        if (currentPage=="#home") {
-            listcurrentprojects('projectList');
-        }
-        
-    };
 
     check_button();
 }

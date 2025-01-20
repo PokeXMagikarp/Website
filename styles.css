@@ -104,10 +104,9 @@ footer {
 }
 
 
-
  /* Stylish button */
  #openPopupBtn {
-    background: linear-gradient(135deg, #4caf50, #81c784);
+    background: linear-gradient(135deg, #6c54f4, #4f2974);
     color: white;
     border: none;
     padding: 12px 20px;
@@ -117,10 +116,12 @@ footer {
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    animation: slideIn 2s;
+    width: 100%;
 }
 
 #openPopupBtn:hover {
-    background: linear-gradient(135deg, #388e3c, #66bb6a);
+    background: linear-gradient(135deg, #0d47a1, #4f2974);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
