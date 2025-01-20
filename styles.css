@@ -76,6 +76,35 @@ footer {
     width: 100%;
 }
 
+
+/*link to projects button*/
+ #linktoprojects {
+    background: linear-gradient(135deg, #6c54f4, #4f2974);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    animation: slideIn 2s;
+}
+
+#linktoprojects:hover {
+    background: linear-gradient(135deg, #0d47a1, #4f2974);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+#linktoprojects:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+
  /* Stylish button */
  #openPopupBtn {
     background: linear-gradient(135deg, #4caf50, #81c784);
