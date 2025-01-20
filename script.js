@@ -2,9 +2,6 @@
 
 let projectsPageDisplayed = false;
 
-// Array of project names
-let projects = ['Home Assistant using Raspberry Pi 4', 'Project D', 'Project B'];
-
 function showProjectsPage() {
     setpage('#projects')
 
@@ -26,7 +23,7 @@ function showProjectsPage() {
         let currentPage = window.location.hash; // Default to #home
         
         if (currentPage === "#projects") {
-            listprojects('project_page_list');
+            listcurrentprojects('project_page_list');
             
         } else if (currentPage === "#home") {
             
@@ -39,6 +36,38 @@ function showProjectsPage() {
     projectsPageDisplayed = true;
 }
 
+function showProjectsPagehtml() {
+    // Check if the current page is already #projects
+    if (window.location.hash === "#projects") return;
+
+    // Set the page hash to #projects
+    setpage('#projects');
+
+    // Fetch the new HTML file
+    fetch('projects_page.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load the projects page. Status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            // Replace the current page content with the fetched content
+            const mainContainer = document.getElementById('main'); // Assuming there's a container for the main content
+            if (mainContainer) {
+                mainContainer.innerHTML = data;
+            } else {
+                console.error('Main container not found in the current HTML.');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Error loading the projects page. Please try again later.');
+        });
+}
+
+
+
 function refreshHome() {
     location.reload();
 }
@@ -47,9 +76,10 @@ function showHomePage() {
     if (projectsPageDisplayed==false) return;
     refreshHome();
 }
-function listprojects(container) {
+function listcurrentprojects(container) {
 
-    
+    // Array of project names
+    let projects = ['Home Assistant using Raspberry Pi 4', 'Project D', 'Project B'];
 
     // Get the container element where the list will be added
     let projectListContainer = document.getElementById(container);
@@ -92,7 +122,7 @@ function check_button(){
 
         // Show popup and load content from an external file
         openPopupBtn.addEventListener('click', () => {
-            fetch('projects/capstone.html')
+            fetch('projects/old/capstone.html')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Failed to load content.');
@@ -134,7 +164,7 @@ function main(){
     window.onload = function() {
         
         if (currentPage=="#home") {
-            listprojects('projectList');
+            listcurrentprojects('projectList');
         }
         
     };
