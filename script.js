@@ -38,12 +38,13 @@ function showProjectsPage() {
 
 function showProjectsPagehtml() {
     alert("this is the projects html");
+    alert("The first window location hash is: " + window.location.hash);
     // Check if the current page is already #projects
-    if (window.location.hash === "#projects") return;
+    // if (window.location.hash === "#projects") return;
 
     // Set the page hash to #projects
     window.location.hash='#projects';
-
+    alert("The second window location hash is: " + window.location.hash);
     // Optionally, show a loading spinner or indicator
     const mainContainer = document.getElementById('main');
     if (mainContainer) {
