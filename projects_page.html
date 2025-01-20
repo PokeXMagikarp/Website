@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam's Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</head>
+<body>
+
+
+<header>
+    <div>Welcome to My Profile</div>
+    <nav>
+        <a href="#home" onclick="showHomePage(); return false;">Home</a>
+        <a href="#projects" onclick="showProjectsPagehtml(); return false;">Projects</a>
+    </nav>
+</header>
+
+<div id="home" class="profile">
+    <h1>Projects</h1>
+    <p>On this page you will find all the projects that I'm working on and the ones I've completed.</p>
+</div>
+
+<div id="projects" class="projects">
+    <h2>Projects I am Working On</h2>
+    <ul id="projectList">
+    </ul>
+</div>
+
+<!-- Trigger button -->
+<button id="openPopupBtn">Click Me</button>
+
+<!-- Popup and overlay -->
+<div class="popup-overlay" id="popupOverlay"></div>
+<div class="popup" id="popup">
+    <!-- Content will be loaded dynamically here -->
+    <div id="popupContent"></div>
+    <button class="close-btn" id="closePopupBtn">Close</button>
+    </div>
+
+
+<footer>
+    © 2025 Sam's Portfolio. All Rights Reserved.
+</footer>
+
+</body>
+</html>
