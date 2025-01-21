@@ -37,11 +37,18 @@ function showProjectsPage() {
 }
 
 function showProjectsPagehtml() {
+    
     // Check if the current page is already #projects
     if (window.location.hash === "#projects") return;
 
     // Set the page hash to #projects
-    setpage('#projects');
+    window.location.hash='#projects';
+    
+    // Optionally, show a loading spinner or indicator
+    const mainContainer = document.getElementById('main');
+    if (mainContainer) {
+        mainContainer.innerHTML = '<p>Loading...</p>';
+    }
 
     // Fetch the new HTML file
     fetch('projects_page.html')
@@ -53,7 +60,6 @@ function showProjectsPagehtml() {
         })
         .then(data => {
             // Replace the current page content with the fetched content
-            const mainContainer = document.getElementById('main'); // Assuming there's a container for the main content
             if (mainContainer) {
                 mainContainer.innerHTML = data;
             } else {
@@ -62,10 +68,92 @@ function showProjectsPagehtml() {
         })
         .catch(error => {
             console.error(error);
-            alert('Error loading the projects page. Please try again later.');
+            if (mainContainer) {
+                mainContainer.innerHTML = '<p>Error loading the projects page. Please try again later.</p>';
+            }
         });
 }
 
+
+function showHomePagehtml() {
+    setpage('#home');
+    refreshHome();
+}
+
+
+function projectbtnpress(buttonId, detailsId, contentUrl)
+{
+    // Get the details div using the provided detailsId
+    const detailsDiv = document.getElementById(detailsId);
+
+    // Check if the details are already visible
+    if (detailsDiv.style.display === 'block') {
+        // If visible, hide it
+        detailsDiv.style.display = 'none';
+        button.innerHTML = "Show Details"; // Change button text to 'Show Details'
+    } else 
+        {
+        fetch(contentUrl) // Fetch the specified content URL
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load project details.');
+                        
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    detailsDiv.innerHTML = data; // Populate the div with fetched content
+                    detailsDiv.style.display = 'block'; // Show the div
+                })
+                .catch(error => {
+                    console.error(error);
+                    detailsDiv.innerHTML = '<p>Error loading project details. Please try again later.</p>';
+                    detailsDiv.style.display = 'block'; // Show the error message
+                });
+        }
+}
+
+
+function projectbtnlistener(buttonId, detailsId, contentUrl) {
+    // Get the button and details div elements
+    const button = document.getElementById(buttonId);
+    const detailsDiv = document.getElementById(detailsId);
+
+    if (!button || !detailsDiv) {
+        console.error(`Button or details div with IDs ${buttonId} and ${detailsId} not found.`);
+        return;
+    }
+
+    // Add event listener to the specified button
+    button.addEventListener('click', function () {
+        // Toggle visibility: If visible, hide it; if hidden, show it
+        if (detailsDiv.style.display === 'block') {
+            detailsDiv.style.display = 'none';
+            return;
+        }
+
+        // If hidden, fetch the content and display it
+        alert("try to get content from "+contentUrl);
+        fetch(contentUrl) // Fetch the specified content URL
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load project details.');
+                    
+                }
+                return response.text();
+            })
+            .then(data => {
+                detailsDiv.innerHTML = data; // Populate the div with fetched content
+                detailsDiv.style.display = 'block'; // Show the div
+            })
+            .catch(error => {
+                console.error(error);
+                detailsDiv.innerHTML = '<p>Error loading project details. Please try again later.</p>';
+                detailsDiv.style.display = 'block'; // Show the error message
+            });
+        alert("the content it... "+detailsDiv.innerHTML);    
+    });
+}
 
 
 function refreshHome() {
@@ -87,10 +175,14 @@ function listcurrentprojects(container) {
     // Create an unordered list element
     let ul = document.createElement('ul');
 
+    //set class name
+    ul.id = 'openPopupBtn';  
+
     // Loop through the projects array and create list items
     for (let project of projects) {
         let li = document.createElement('li'); // Create a list item
         li.textContent = project;             // Set the text of the list item
+        li.className = 'openPopupBtn-item';
         ul.appendChild(li);                   // Append the list item to the unordered list
     }
 
@@ -159,17 +251,10 @@ function check_button(){
 
 function main(){
     setpage('#home');
-    let currentPage = window.location.hash; // Default to #home if no hash
+    
+    projectbtnlistener('capstoneBtn',"capstoneDetails","projects/old/capstone.html")
+    
 
-    window.onload = function() {
-        
-        if (currentPage=="#home") {
-            listcurrentprojects('projectList');
-        }
-        
-    };
-
-    check_button();
 }
 
 

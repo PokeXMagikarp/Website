@@ -10,36 +10,34 @@
 </head>
 <body>
 
-
-<header>
-    <div>Welcome to My Profile</div>
-    <nav>
-        <a href="#home" onclick="showHomePage(); return false;">Home</a>
-        <a href="#projects" onclick="showProjectsPagehtml(); return false;">Projects</a>
-    </nav>
-</header>
-
-<div id="home" class="profile">
-    <h1>Projects</h1>
-    <p>On this page you will find all the projects that I'm working on and the ones I've completed.</p>
-</div>
-
-<div id="projects" class="projects">
-    <h2>Projects I am Working On</h2>
-    <ul id="projectList">
-    </ul>
-</div>
-
-<!-- Trigger button -->
-<button id="openPopupBtn">Click Me</button>
-
-<!-- Popup and overlay -->
-<div class="popup-overlay" id="popupOverlay"></div>
-<div class="popup" id="popup">
-    <!-- Content will be loaded dynamically here -->
-    <div id="popupContent"></div>
-    <button class="close-btn" id="closePopupBtn">Close</button>
+<div id="main">
+    <div id="Projects" class="profile">
+        <h1>Projects</h1>
+        <p>On this page you will find all the projects that I'm working on and the ones I've completed.</p>
     </div>
+
+    <div id="projects" class="projects">
+        <h2>Projects I am working on</h2>
+        <button class="extend-btn" id="homeasstBtn" onclick="projectbtnpress('homeasstBtn', 'homeassistantDetails', 'projects/current/homeassistant.html'); return false;">Home Assistant</button>
+        <div id="homeassistantDetails" class="project-details" style="display: none;">
+            <!-- Content will be loaded dynamically here -->
+            <p>Loading project details...</p>
+        </div>
+    
+        <h2>Past Projects</h2>
+        <button class="extend-btn" id="capstoneBtn" onclick="projectbtnpress('capstoneBtn', 'capstoneDetails', 'projects/old/capstone.html'); return false;">Capstone</button>
+        <div id="capstoneDetails" class="project-details" style="display: none;">
+            <!-- Content will be loaded dynamically here -->
+            <p>Loading project details...</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 
 <footer>

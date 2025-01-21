@@ -104,10 +104,9 @@ footer {
 }
 
 
-
  /* Stylish button */
  #openPopupBtn {
-    background: linear-gradient(135deg, #4caf50, #81c784);
+    background: linear-gradient(135deg, #6c54f4, #4f2974);
     color: white;
     border: none;
     padding: 12px 20px;
@@ -117,10 +116,12 @@ footer {
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    animation: slideIn 2s;
+    width: 100%;
 }
 
 #openPopupBtn:hover {
-    background: linear-gradient(135deg, #388e3c, #66bb6a);
+    background: linear-gradient(135deg, #0d47a1, #4f2974);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
@@ -175,6 +176,72 @@ footer {
 .close-btn:hover {
     background-color: #d32f2f;
 }
+
+.project-details {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: linear-gradient(135deg, #0d47a1, #4f2974);
+    border: 1px solid #000454;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #ffffff;
+    display: none; /* Keep it hidden initially */
+    animation: fadeIn 0.3s ease-in-out; /* Smooth animation */
+}
+
+.project-details p {
+    margin: 0;
+    padding: 0;
+}
+
+.extend-btn {
+    background: linear-gradient(135deg, #6c54f4, #4f2974);
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.extend-btn:hover {
+    background: linear-gradient(135deg, #5b47d1, #3a1d5a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional styles for the table */
+.requirements-table {
+    margin: 20px auto;
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #3a1d5a;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.requirements-table td, .requirements-table th {
+    padding: 12px 20px;
+    text-align: centre;
+}
+
+.requirements-table th {
+    background-color: #6c54f4;
+    color: #fff;
+    font-size: 18px;
+}
+
+.requirements-table td {
+    background-color: #f4f4f4;
+    color: #333;
+    font-size: 16px;
+}
+
+
 
 @keyframes fadeIn {
     from { opacity: 0; }

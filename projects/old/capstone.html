@@ -1,4 +1,81 @@
-<div>
-    <h2>Welcome!</h2>
-    <p>This is a message loaded from an external file. This page will be for my capstone project.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam's Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</head>
+<body>
+
+
+<p><strong>Introduction:</strong></p>
+<p>My team and I made a microwave demultiplexer which breaks up a large input frequency range of 1-10 GHz down to 4 smaller output frequency ranges of 1-2, 2-4, 4-8, and 8-10GHz.</p>
+<p>This project is a subsystem that can be used for radar detection to check if a vessel has appeared on another vessel's radar.</p>
+<p>I worked in a team of 3 to complete a demultiplexer made up of 3 diplexers. Each team member took responsibility for a diplexer over a given frequency range. I was responsible for the high frequencies; therefore, I needed to design a diplexer made up of a low-pass filter with a cutoff at 8GHz and a high-pass or bandpass filter with a low frequency cutoff at 8GHz and a minimum high frequency cutoff at 10GHz.</p>
+
+<p><strong>Requirements:</strong></p>
+<table class="requirements-table">
+    <tbody>
+        <tr>
+            <td><strong>Requirement</strong></td>
+            <td><strong>Has requirement been met?</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Stopband attenuation</strong></td>
+            <td>&lt;-10dB [achieved]</td>
+        </tr>
+        <tr>
+            <td><strong>Passband ripple</strong></td>
+            <td>&lt;0.5dB [achieved]</td>
+        </tr>
+        <tr>
+            <td><strong>Rolloff</strong></td>
+            <td>As sharp as possible [achieved]</td>
+        </tr>
+        <tr>
+            <td><strong>Order</strong></td>
+            <td>&lt;7 [achieved]</td>
+        </tr>
+        <tr>
+            <td><strong>Crossover frequency</strong></td>
+            <td>3dB [achieved]</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Block diagram:</strong></p>
+<p>The block diagram for the system looks like this:</p>
+<img src="projects/images/capstone_block_diagram.png" alt="Capstone Block Diagram" style="width:100%; max-width:600px;">
+<p>Figure 1: Block diagram of the demultiplexer project</p>
+
+<p><strong>Final diplexer response for crossover at 8GHz:</strong></p>
+<img src="projects/images/final_realisable_diplexer.png" alt="Final Realisable Diplexer" style="width:100%; max-width:600px;">
+<p>Figure 2: Final realisable diplexer result with via connections</p>
+
+<p><strong>Simulated diplexer board:</strong></p>
+<img src="projects/images/bpf_final_realisable.png" alt="BPF Final Realisable" style="width:100%; max-width:600px;">
+<p>Figure 3: BPF final optimised realisable result after optimisation</p>
+<img src="projects/images/lpf_final_realisable.png" alt="LPF Final Realisable" style="width:100%; max-width:600px;">
+<p>Figure 4: LPF final realisable result after optimisation</p>
+
+<p><strong>Final demultiplexer response:</strong></p>
+<p>The full demultiplexer simulation was able to be made up of the 1-10GHz diplexer shown previously as well as 2 other diplexers at frequencies 1-4GHz and 1-8GHz.</p>
+<img src="projects/images/full_demultiplexer_response.png" alt="Full Demultiplexer Response" style="width:100%; max-width:600px;">
+<p>Figure 5: Full demultiplexer response</p>
+
+<p><strong>Physical board after etching:</strong></p>
+<img src="projects/images/physical_board_after_etching.png" alt="Physical Board After Etching" style="width:100%; max-width:600px;">
+<p>Figure 6: Physical board after etching
+
+
+</p>
+
+<p><strong>Conclusion:</strong></p>
+<p>A full simulation of the demultiplexer system was successfully created, which separates 1-2, 2-4, 4-8, and 8-10GHz into 4 different output channels. The full demultiplexer response suffered some interference when combining all three diplexers together. The crossover frequencies did not meet at -3.01dB, and there were reflections within the passband. Some further optimization and improvement could be made by tuning the lengths of the stubs of each of the handpasses to line up. The manufacturability of the 1-8GHz and 1-4GHz boards was not achieved. However, the diplexer with a crossover frequency at 8GHz did meet specifications even when implemented using real values.
+</p>
+
+</body>
+</html>
