@@ -1,0 +1,2 @@
+projects/videos/** filter=lfs diff=lfs merge=lfs -text
+projects/videos/home_management_system.mp4 filter=lfs diff=lfs merge=lfs -text
