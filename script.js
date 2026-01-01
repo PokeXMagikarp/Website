@@ -79,7 +79,10 @@ function showHomePagehtml() {
     setpage('#home');
     refreshHome();
 }
-
+function VisitSite() {
+    window.location.href = "https://example.com";   
+    
+}
 
 function projectbtnpress(buttonId, detailsId, contentUrl)
 {
