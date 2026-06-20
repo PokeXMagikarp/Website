@@ -19,7 +19,40 @@
 [photo2]
 <p>Note: the dot on the microcontroller marks the orientation of the STM32</p>
 <p>To interface with the microcontroller we will need the following programs</p>
-[software table]
+
+
+
+
+<table class="software table">
+    <tbody>
+        <tr>
+            <td><strong>Name</strong></td>
+            <td><strong>Link</strong></td>
+            <td><strong>Description</strong></td>
+        </tr>
+        <tr>
+            <td>STM32 Cube MX</td>
+            <td><button id="hyperlink" onclick="window.location.href = 'https://www.st.com/en/development-tools/stm32cubemx.html';">Link</button></td>
+            <td>Code generator for initial setup</td>
+        </tr>
+        <tr>
+            <td>STM32 Cube IDE</td>
+            <td><button id="hyperlink" onclick="window.location.href = 'https://www.st.com/en/development-tools/stm32cubeide.html';">Link</button></td>
+            <td>Code editor</td>
+        </tr>
+        <tr>
+            <td>STM32 Cube Programmer</td>
+            <td><button id="hyperlink" onclick="window.location.href = 'https://www.st.com/en/development-tools/stm32cubeprog.html';">Link</button></td>
+            <td>Programmer to put code onto microcontroller</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
 <p>Once downloaded and installed all the programs above and do the following steps.</p>
 <h2>Steps</h2>
 <h3>1. Open CubeMX and make a new project. Select the device STM32f103C8T6</h3>
@@ -116,38 +149,11 @@
 <p>https://amitesh-singh.github.io/stm32/2017/05/27/Overcoming-wrong-pullup-in-blue-pill.html</p>
 
 
-<table class="requirements-table">
-    <tbody>
-        <tr>
-            <td><strong>Requirement</strong></td>
-            <td><strong>Has requirement been met?</strong></td>
-        </tr>
-        <tr>
-            <td><strong>Stopband attenuation</strong></td>
-            <td>&lt;-10dB [achieved]</td>
-        </tr>
-        <tr>
-            <td><strong>Passband ripple</strong></td>
-            <td>&lt;0.5dB [achieved]</td>
-        </tr>
-        <tr>
-            <td><strong>Rolloff</strong></td>
-            <td>As sharp as possible [achieved]</td>
-        </tr>
-        <tr>
-            <td><strong>Order</strong></td>
-            <td>&lt;7 [achieved]</td>
-        </tr>
-        <tr>
-            <td><strong>Crossover frequency</strong></td>
-            <td>3dB [achieved]</td>
-        </tr>
-    </tbody>
-</table>
 
-<p><strong>Block diagram:</strong></p>
-<p>The block diagram for the system looks like this:</p>
-<img src="https://github.com/PokeXMagikarp/STM32blinkinglight.git/images/Picture1.png" alt="Capstone Block Diagram" style="width:100%; max-width:600px;">
+
+<p><strong>Pinout:</strong></p>
+<p>The pinout for the STM32 looks like this:</p>
+<img src="https://github.com/PokeXMagikarp/STM32blinkinglight.git/images/Picture1.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 
 </body>
 </html>
