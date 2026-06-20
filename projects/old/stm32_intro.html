@@ -14,9 +14,9 @@
 <p>This project is a “helloworld” project for introduction to the STM32.</p>
 <p>The microcontroller I bought for this is the STM32f103C8T6 which I bought from TEMU for less than $6 aud.</p>
 <h4>The pinout is</h4>
-[photo1]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture1.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>But this is installed on a breakout board so the pins are labelled as on the board:</p>
-[photo2]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture2.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>Note: the dot on the microcontroller marks the orientation of the STM32</p>
 <p>To interface with the microcontroller we will need the following programs</p>
 
@@ -57,12 +57,12 @@
 <h2>Steps</h2>
 <h3>1. Open CubeMX and make a new project. Select the device STM32f103C8T6</h3>
 <h3>2. Configure the project settings as follows</h3>
-[photo3]
-[photo4]
-[photo5]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture3.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture4.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture5.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>After pressing “GENERATE CODE” some template code for use in the IDE will be generated and a new project will exist in the chosen directory.</p>
 <h3>3. Open CubeIDE and do the following</h3>
-[photo6]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture6.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>For the code we will make a simple LED on program when pressing a button. PA5 is our input which will be connected to a button and PA0 is out output which will be connected to an LED.</p>
 <p>Below is some simulation code simulated using Arduino on tinkercad just to iron out the logic of the code.</p>
 <h4>Arduino Code</h4>
@@ -91,7 +91,7 @@ void loop() {
 
 
 <h4>Arduino Simulation</h4>
-[photo7]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture7.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>The equivalent STM32 code is below.</p>
 <h4>STM32 code</h4>
 
@@ -122,15 +122,15 @@ while (1)
 <h3>4. Paste in STM32 code above.</h3>
 <h3>5. Open STMCubeProgrammer</h3>
 <p>The DFU (device firmware upgrade) bootloader is stored in the system memory of the STM32 by factory default. In order to upgrade the firmware via usb we need the DFU bootloader to be running. Therefore, to flash software via usb we need to be in the “System memory” boot mode.</p>
-[photo8]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture8.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>Below is a photo showing the jumpers setting boot0=high and boot1=low.</p>
-[photo9]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture9.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>Once pins are set, power off and power on. Notice the green LED will not flash</p>
 <h2>Problem:</h2>
 <p>Usb device not being detected properly</p>
 <p>I could get my device to be detected by windows but it couldn’t identify it. See images below</p>
-[photo10]
-[photo11]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture10.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture11.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 <p>We should expect for it to say “USB\VID_0483&amp;PID_DF11” instead of “USB\DEVICE_DESCRIPTOR_FAILURE” this means that windows has detected something is plugged in but wasn’t able to read the description for it.</p>
 <p>There are a few reasons why this could be the case</p>
 <p>1. Usb cable is power only or faulty</p>
@@ -173,9 +173,9 @@ while (1)
 
 
 <p>Ref photo</p>
-[photo12]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture12.png" alt="photo12" style="width:100%; max-width:600px;">
 <p>R10 is the 10k pulldown resistor</p>
-[photo13]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture13.png" alt="photo13" style="width:100%; max-width:600px;">
 <h4>Table of resistors</h4>
 [table]
 
@@ -236,44 +236,44 @@ while (1)
 
 <p>This guy [2] looks like he has the same problem as me and his fix was to solder a 1.8k resistor in parallel.</p>
 <p>I didn’t have a 1.8kohm resistor but I had a 2kohm which was probably close enough so I soldered that in parallel to get a pulldown resistance of ~1.6kohm. see photo below.</p>
-[photo14]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture14.png" alt="photo14" style="width:100%; max-width:600px;">
 <p>This unfortunately did not fix my problem and the stm32 is still unrecognised by the pc.</p>
 <p>I did some more digging and I found that some cheap boards (like this one) did not actually connect boot1 and leaves it floating. My board for some reason had a 100kohm resistor between PB2 and the boot1 jumper. This seemed wrong because it should be tied to ground to get 0v to boot into system memory.</p>
 <p>so I removed that 100kohm resistor and shorted the connection hoping that this would help. See below.</p>
-[photo15]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture15.png" alt="photo15" style="width:100%; max-width:600px;">
 <p>Unfortunately again this did not fix my problem. It could be just because it’s a cheap board and doesn’t actually include usb functionality. My next idea is to flash using ST-link instead of usb and hope that that works better.</p>
 <p>I bought an ST-link, I got it off TEMU for about 5 bucks.</p>
 <p>The stm32 does not need to be in a specific boot mode for st-link flashing to work.</p>
 <p>Just connect the matching pins</p>
 <p>I was able to connect using these settings</p>
-[photo16]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture16.png" alt="photo16" style="width:100%; max-width:600px;">
 <p>Apparently “shared” needs to be enabled in order to connect.</p>
 <p>To flash the program that we created, we first need to create a .hex file.</p>
 <p>To do this open your created program. In this case</p>
 <p>B:\Program Files\STM32Files\SCRATCH\Light_on\Debug</p>
 <p>And open the project file with STM32CubeIDE</p>
-[photo17]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture17.png" alt="photo17" style="width:100%; max-width:600px;">
 <p>Open the project properties</p>
-[photo18]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture18.png" alt="photo18" style="width:100%; max-width:600px;">
 <p>Navigate to post build outputs in C/C++ Build&gt;&gt;settings&gt;&gt;MCU/MPU Post Build Outputs</p>
 <p>select convert to binary and hex file options</p>
 <p>then apply and close.</p>
-[photo19]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture19.png" alt="photo19" style="width:100%; max-width:600px;">
 <p>Click the build button</p>
-[photo20]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture20.png" alt="photo20" style="width:100%; max-width:600px;">
 <p>Notice log file indicating hex file creation</p>
-[photo21]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture21.png" alt="photo21" style="width:100%; max-width:600px;">
 <p>Then we can flash the .hex file using STM32 Cube Programmer.</p>
 <p>click here</p>
-[photo22]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture22.png" alt="photo22" style="width:100%; max-width:600px;">
 <p>Then brows for your .hex file in your project debug folder. In this case</p>
 <p>B:\Program Files\STM32Files\SCRATCH\Light_on\Debug</p>
 <p>Open your .hex file</p>
-[photo23]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture23.png" alt="photo23" style="width:100%; max-width:600px;">
 <p>Press the “start programming” button</p>
-[photo24]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture24.png" alt="photo24" style="width:100%; max-width:600px;">
 <p>Then click “ok”</p>
-[photo25]
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture25.png" alt="photo25" style="width:100%; max-width:600px;">
 <p>You can now disconnect the st-link and stm32</p>
 <h2>References</h2>
 <p>https://www.youtube.com/watch?v=6S-zypu6H-o</p>
@@ -282,9 +282,7 @@ while (1)
 
 
 
-<p><strong>Pinout:</strong></p>
-<p>The pinout for the STM32 looks like this:</p>
-<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture1.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
+
 
 </body>
 </html>
