@@ -10,19 +10,112 @@
 </head>
 <body>
 
-
-<p><strong>STM32 Hello World:</strong></p>
+<h1>STM32 Hello World Project</h1>
 <p>This project is a “helloworld” project for introduction to the STM32.</p>
-
 <p>The microcontroller I bought for this is the STM32f103C8T6 which I bought from TEMU for less than $6 aud.</p>
+<h4>The pinout is</h4>
+[photo1]
+<p>But this is installed on a breakout board so the pins are labelled as on the board:</p>
+[photo2]
+<p>Note: the dot on the microcontroller marks the orientation of the STM32</p>
+<p>To interface with the microcontroller we will need the following programs</p>
+[software table]
+<p>Once downloaded and installed all the programs above and do the following steps.</p>
+<h2>Steps</h2>
+<h3>1. Open CubeMX and make a new project. Select the device STM32f103C8T6</h3>
+<h3>2. Configure the project settings as follows</h3>
+[photo3]
+[photo4]
+[photo5]
+<p>After pressing “GENERATE CODE” some template code for use in the IDE will be generated and a new project will exist in the chosen directory.</p>
+<h3>3. Open CubeIDE and do the following</h3>
+[photo6]
+<p>For the code we will make a simple LED on program when pressing a button. PA5 is our input which will be connected to a button and PA0 is out output which will be connected to an LED.</p>
+<p>Below is some simulation code simulated using Arduino on tinkercad just to iron out the logic of the code.</p>
+<h4>Arduino Code</h4>
+[code table]
+<h4>Arduino Simulation</h4>
+[photo7]
+<p>The equivalent STM32 code is below.</p>
+<h4>STM32 code</h4>
+[code table]
+<h4>STM32 simulation</h4>
+<p>There is no good STM32 simulation tool. The industry standard is to use real hardware to debug.</p>
+<p>Closest thing to simulating STM32 is RENODE which is not easy to setup and use.</p>
+<h3>4. Paste in STM32 code above.</h3>
+<h3>5. Open STMCubeProgrammer</h3>
+<p>The DFU (device firmware upgrade) bootloader is stored in the system memory of the STM32 by factory default. In order to upgrade the firmware via usb we need the DFU bootloader to be running. Therefore, to flash software via usb we need to be in the “System memory” boot mode.</p>
+[photo8]
+<p>Below is a photo showing the jumpers setting boot0=high and boot1=low.</p>
+[photo9]
+<p>Once pins are set, power off and power on. Notice the green LED will not flash</p>
+<h2>Problem:</h2>
+<p>Usb device not being detected properly</p>
+<p>I could get my device to be detected by windows but it couldn’t identify it. See images below</p>
+[photo10]
+[photo11]
+<p>We should expect for it to say “USB\VID_0483&amp;PID_DF11” instead of “USB\DEVICE_DESCRIPTOR_FAILURE” this means that windows has detected something is plugged in but wasn’t able to read the description for it.</p>
+<p>There are a few reasons why this could be the case</p>
+<p>1. Usb cable is power only or faulty</p>
+<p>2. D+ / D− hardware issues</p>
+<p>3. Missing or incorrect pull-up</p>
+<p>I tested the usb cable and was able to transfer a photo from an old phone. So the cable is fine.</p>
+<p>Tested the continuity between D+ (PA12) D-(PA11) and they seem to have continuity. So they are all good. I also tested the pullup value of PA12 to 3.3V which is 10kOhm. I think this is incorrect. I think it should be 1.5kohm.</p>
+<p>To do these tests I unplugged the STM32 and put my multimeter probes on the points outlined below</p>
+<h4>Continuity Tests</h4>
+[add table here]
+<p>Ref photo</p>
+[photo12]
+<p>R10 is the 10k pulldown resistor</p>
+[photo13]
+<h4>Table of resistors</h4>
+[table]
+<p>This guy [2] looks like he has the same problem as me and his fix was to solder a 1.8k resistor in parallel.</p>
+<p>I didn’t have a 1.8kohm resistor but I had a 2kohm which was probably close enough so I soldered that in parallel to get a pulldown resistance of ~1.6kohm. see photo below.</p>
+[photo14]
+<p>This unfortunately did not fix my problem and the stm32 is still unrecognised by the pc.</p>
+<p>I did some more digging and I found that some cheap boards (like this one) did not actually connect boot1 and leaves it floating. My board for some reason had a 100kohm resistor between PB2 and the boot1 jumper. This seemed wrong because it should be tied to ground to get 0v to boot into system memory.</p>
+<p>so I removed that 100kohm resistor and shorted the connection hoping that this would help. See below.</p>
+[photo15]
+<p>Unfortunately again this did not fix my problem. It could be just because it’s a cheap board and doesn’t actually include usb functionality. My next idea is to flash using ST-link instead of usb and hope that that works better.</p>
+<p>I bought an ST-link, I got it off TEMU for about 5 bucks.</p>
+<p>The stm32 does not need to be in a specific boot mode for st-link flashing to work.</p>
+<p>Just connect the matching pins</p>
+<p>I was able to connect using these settings</p>
+[photo16]
+<p>Apparently “shared” needs to be enabled in order to connect.</p>
+<p>To flash the program that we created, we first need to create a .hex file.</p>
+<p>To do this open your created program. In this case</p>
+<p>B:\Program Files\STM32Files\SCRATCH\Light_on\Debug</p>
+<p>And open the project file with STM32CubeIDE</p>
+[photo17]
+<p>Open the project properties</p>
+[photo18]
+<p>Navigate to post build outputs in C/C++ Build&gt;&gt;settings&gt;&gt;MCU/MPU Post Build Outputs</p>
+<p>select convert to binary and hex file options</p>
+<p>then apply and close.</p>
+[photo19]
+<p>Click the build button</p>
+[photo20]
+<p>Notice log file indicating hex file creation</p>
+[photo21]
+<p>Then we can flash the .hex file using STM32 Cube Programmer.</p>
+<p>click here</p>
+[photo22]
+<p>Then brows for your .hex file in your project debug folder. In this case</p>
+<p>B:\Program Files\STM32Files\SCRATCH\Light_on\Debug</p>
+<p>Open your .hex file</p>
+[photo23]
+<p>Press the “start programming” button</p>
+[photo24]
+<p>Then click “ok”</p>
+[photo25]
+<p>You can now disconnect the st-link and stm32</p>
+<h2>References</h2>
+<p>https://www.youtube.com/watch?v=6S-zypu6H-o</p>
+<p>https://amitesh-singh.github.io/stm32/2017/05/27/Overcoming-wrong-pullup-in-blue-pill.html</p>
 
-<p><strong>Pinout:</strong></p>
-<p>the pinout for the stm32 that i want to use is this:</p>
-<img src="projects/images/capstone_block_diagram.png" alt="Capstone Block Diagram" style="width:100%; max-width:600px;">
-<p>Figure 1: stm32 pinout</p>
 
-
-<p><strong>Details</strong></p>
 <table class="requirements-table">
     <tbody>
         <tr>
@@ -56,32 +149,6 @@
 <p>The block diagram for the system looks like this:</p>
 <img src="projects/images/capstone_block_diagram.png" alt="Capstone Block Diagram" style="width:100%; max-width:600px;">
 <p>Figure 1: Block diagram of the demultiplexer project</p>
-
-<p><strong>Final diplexer response for crossover at 8GHz:</strong></p>
-<img src="projects/images/final_realisable_diplexer.png" alt="Final Realisable Diplexer" style="width:100%; max-width:600px;">
-<p>Figure 2: Final realisable diplexer result with via connections</p>
-
-<p><strong>Simulated diplexer board:</strong></p>
-<img src="projects/images/bpf_final_realisable.png" alt="BPF Final Realisable" style="width:100%; max-width:600px;">
-<p>Figure 3: BPF final optimised realisable result after optimisation</p>
-<img src="projects/images/lpf_final_realisable.png" alt="LPF Final Realisable" style="width:100%; max-width:600px;">
-<p>Figure 4: LPF final realisable result after optimisation</p>
-
-<p><strong>Final demultiplexer response:</strong></p>
-<p>The full demultiplexer simulation was able to be made up of the 1-10GHz diplexer shown previously as well as 2 other diplexers at frequencies 1-4GHz and 1-8GHz.</p>
-<img src="projects/images/full_demultiplexer_response.png" alt="Full Demultiplexer Response" style="width:100%; max-width:600px;">
-<p>Figure 5: Full demultiplexer response</p>
-
-<p><strong>Physical board after etching:</strong></p>
-<img src="projects/images/physical_board_after_etching.png" alt="Physical Board After Etching" style="width:100%; max-width:600px;">
-<p>Figure 6: Physical board after etching
-
-
-</p>
-
-<p><strong>Conclusion:</strong></p>
-<p>A full simulation of the demultiplexer system was successfully created, which separates 1-2, 2-4, 4-8, and 8-10GHz into 4 different output channels. The full demultiplexer response suffered some interference when combining all three diplexers together. The crossover frequencies did not meet at -3.01dB, and there were reflections within the passband. Some further optimization and improvement could be made by tuning the lengths of the stubs of each of the handpasses to line up. The manufacturability of the 1-8GHz and 1-4GHz boards was not achieved. However, the diplexer with a crossover frequency at 8GHz did meet specifications even when implemented using real values.
-</p>
 
 </body>
 </html>
