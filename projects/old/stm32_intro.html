@@ -23,7 +23,7 @@
 
 
 
-<table class="software table">
+<table class="requirements-table">
     <tbody>
         <tr>
             <td><strong>Name</strong></td>
@@ -66,12 +66,56 @@
 <p>For the code we will make a simple LED on program when pressing a button. PA5 is our input which will be connected to a button and PA0 is out output which will be connected to an LED.</p>
 <p>Below is some simulation code simulated using Arduino on tinkercad just to iron out the logic of the code.</p>
 <h4>Arduino Code</h4>
-[code table]
+
+
+
+<div class="code-box">
+    <pre><code>
+const int LED_PIN = 0;
+const int BUTTON_PIN = 5;
+
+void setup() {
+    pinMode(LED_PIN, OUTPUT);
+    pinMode(BUTTON_PIN, INPUT_PULLUP);
+}
+
+void loop() {
+    if (digitalRead(BUTTON_PIN) == LOW) {
+        digitalWrite(LED_PIN, HIGH);
+    } else {
+        digitalWrite(LED_PIN, LOW);
+    }
+}
+    </code></pre>
+</div>
+
+
 <h4>Arduino Simulation</h4>
 [photo7]
 <p>The equivalent STM32 code is below.</p>
 <h4>STM32 code</h4>
-[code table]
+
+
+<div class="code-box">
+    <pre><code>
+while (1)
+{
+    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == GPIO_PIN_RESET)
+    {
+        // Button pressed (active LOW)
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    }
+    else
+    {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+    }
+}
+
+    </code></pre>
+</div>
+
+
+
 <h4>STM32 simulation</h4>
 <p>There is no good STM32 simulation tool. The industry standard is to use real hardware to debug.</p>
 <p>Closest thing to simulating STM32 is RENODE which is not easy to setup and use.</p>
@@ -96,13 +140,100 @@
 <p>Tested the continuity between D+ (PA12) D-(PA11) and they seem to have continuity. So they are all good. I also tested the pullup value of PA12 to 3.3V which is 10kOhm. I think this is incorrect. I think it should be 1.5kohm.</p>
 <p>To do these tests I unplugged the STM32 and put my multimeter probes on the points outlined below</p>
 <h4>Continuity Tests</h4>
-[add table here]
+
+
+<table class="requirements-table">
+    <tbody>
+        <tr>
+            <td><strong>Test Name</strong></td>
+            <td><strong>Contact Points</strong></td>
+            <td><strong>Expected Results (ohm)</strong></td>
+            <td><strong>Recorded Results (ohm)</strong></td>
+        </tr>
+        <tr>
+            <td>Check D- (PA11)</td>
+            <td>PA11&amp;D-,PA11&amp;pa11</td>
+            <td>0,0</td>
+            <td>0,0</td>
+        </tr>
+        <tr>
+            <td>Check D+ (PA12)</td>
+            <td>PA12&amp;D+,PA12&amp;pa12</td>
+            <td>0,0</td>
+            <td>0,0</td>
+        </tr>
+        <tr>
+            <td>Check Pullup R</td>
+            <td>PA12&amp;3.3V</td>
+            <td>1k5</td>
+            <td>10k</td>
+        </tr>
+    </tbody>
+</table>
+
+
 <p>Ref photo</p>
 [photo12]
 <p>R10 is the 10k pulldown resistor</p>
 [photo13]
 <h4>Table of resistors</h4>
 [table]
+
+
+<table class="requirements-table">
+    <tbody>
+        <tr>
+            <td><strong>Resistor</strong></td>
+            <td><strong>Value</strong></td>
+        </tr>
+        <tr>
+            <td>R1</td>
+            <td>670</td>
+        </tr>
+        <tr>
+            <td>R2</td>
+            <td>10k</td>
+        </tr>
+        <tr>
+            <td>R3</td>
+            <td>100k</td>
+        </tr>
+        <tr>
+            <td>R4</td>
+            <td>100k</td>
+        </tr>
+        <tr>
+            <td>R5</td>
+            <td>670</td>
+        </tr>
+        <tr>
+            <td>R6</td>
+            <td>N.A</td>
+        </tr>
+        <tr>
+            <td>R7</td>
+            <td>N.A</td>
+        </tr>
+        <tr>
+            <td>R8</td>
+            <td>N.A</td>
+        </tr>
+        <tr>
+            <td>R9</td>
+            <td>22</td>
+        </tr>
+        <tr>
+            <td>R10(pulldown resistor)</td>
+            <td>10k</td>
+        </tr>
+        <tr>
+            <td>R11</td>
+            <td>22</td>
+        </tr>
+    </tbody>
+</table>
+
+
 <p>This guy [2] looks like he has the same problem as me and his fix was to solder a 1.8k resistor in parallel.</p>
 <p>I didn’t have a 1.8kohm resistor but I had a 2kohm which was probably close enough so I soldered that in parallel to get a pulldown resistance of ~1.6kohm. see photo below.</p>
 [photo14]
@@ -153,7 +284,7 @@
 
 <p><strong>Pinout:</strong></p>
 <p>The pinout for the STM32 looks like this:</p>
-<img src="https://github.com/PokeXMagikarp/STM32blinkinglight.git/images/Picture1.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
+<img src="https://raw.githubusercontent.com/PokeXMagikarp/STM32blinkinglight/main/images/Picture1.png" alt="STM32Pinout" style="width:100%; max-width:600px;">
 
 </body>
 </html>

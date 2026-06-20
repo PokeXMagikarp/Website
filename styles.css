@@ -269,6 +269,21 @@ footer {
     font-size: 1rem;
     color: #ffffff;
   }
+  
+   .code-box {
+    background-color: #1e1e1e;
+    color: #dcdcdc;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+  }
+
+   .code-box pre {
+    margin: 0;
+   }
+
 
 @keyframes fadeIn {
     from { opacity: 0; }
